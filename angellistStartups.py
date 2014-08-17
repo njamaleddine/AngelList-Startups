@@ -5,7 +5,7 @@
 # Output data as a csv file. Skips hidden startups.
 # Rate Limit: 1000 requests per hour
 # Parameters: sys.argv[1] = starting range for URLs to get startup info
-#	      	  sys.argv[2] = ending range for URLs
+#            sys.argv[2] = ending range for URLs
 #	
 #########################################################################
 
