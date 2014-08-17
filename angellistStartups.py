@@ -5,7 +5,7 @@
 # Output data as a csv file. Skips hidden startups.
 # Rate Limit: 1000 requests per hour
 # Parameters: sys.argv[1] = starting range for URLs to get startup info
-#							sys.argv[2] = ending range for URLs
+#	      	  sys.argv[2] = ending range for URLs
 #	
 #########################################################################
 
@@ -72,8 +72,8 @@ outputFile = csv.writer(open("startups.csv", "wb+"))
 
 # Write Header row for CSV
 outputFile.writerow(["Id", "Community Profile", "Name", "AngelList URL", "Logo URL", "Thumbnail URL", "Quality", 
-													 "Product Description", "High Concept", "Followers", "Company URL", "Created At", "Updated At",
-													 "Twitter", "Blog", "Video URL", "City"])
+					"Product Description", "High Concept", "Followers", "Company URL", "Created At", "Updated At",
+					"Twitter", "Blog", "Video URL", "City"])
 
 # Pass in parameters from the command line while running a cron job
 urlList = create_urlList(sys.argv[1], sys.argv[2])
@@ -97,23 +97,23 @@ for i in range(len(urlList)):
 				listCount += 1
 
 				outputFile.writerow([validate_data(data['id']),
-														 validate_data(data['community_profile']), 
-														 validate_data(data['name']), 
-														 validate_data(data['angellist_url']), 
-														 validate_data(data['logo_url']), 
-														 validate_data(data['thumb_url']), 
-														 validate_data(data['quality']),
-														 validate_data(data['product_desc']),
-														 validate_data(data['high_concept']),
-														 validate_data(data['follower_count']),
-														 validate_data(data['company_url']),
-														 validate_data(data['created_at']),
-														 validate_data(data['updated_at']),
-														 validate_data(data['twitter_url']),
-														 validate_data(data['blog_url']),
-														 validate_data(data['video_url']),
-														 startupLocation,
-														 ])
+									validate_data(data['community_profile']), 
+									validate_data(data['name']), 
+									validate_data(data['angellist_url']), 
+									validate_data(data['logo_url']), 
+									validate_data(data['thumb_url']), 
+									validate_data(data['quality']),
+									validate_data(data['product_desc']),
+									validate_data(data['high_concept']),
+									validate_data(data['follower_count']),
+									validate_data(data['company_url']),
+									validate_data(data['created_at']),
+									validate_data(data['updated_at']),
+									validate_data(data['twitter_url']),
+									validate_data(data['blog_url']),
+									validate_data(data['video_url']),
+									startupLocation,
+									])
 				print data['name']
 
 # Display an error message if no data is found for any companies
