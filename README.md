@@ -1,26 +1,22 @@
-AngelList-Startups
-==================
+# AngelList-Startups
 
-###Using AngelList's API obtain data about all startups in NYC
+**Date Developed:** 2014-01-03
 
-**Date:** 2014-01-03
-
-**Description:** Using AngelList's API obtain data about all startups. Output data as a csv file. Skips hidden startups.
-
-**Angelist API Rate Limit:** 1000 requests per hour. For more see the [AngelList API](https://angel.co/api)
-
-**Parameters:**
-
-sys.argv[1] = starting range for URLs to get startup info
-
-sys.argv[2] = ending range for URLs
+Using AngelList's API obtain data about NYC startups. Output data as a csv file. Skips hidden startups.
 
 Each company scraped from AngelList is saved in the csv with an id.
 Each request to the website could potentially be scraped at 1000 companies per hour using an external cron job or task queuing service with 2 the start and end parameters.
 
-**AngelListStartups.py may run as a standalone script through a python shell as such:**
+**Angelist API Rate Limit:** 1000 requests per hour. For more see the [AngelList API](https://angel.co/api)
 
-`python AngelListStartups.py {start_number} {end_number}`
+### Parameters:
+```python
+sys.argv[1] # starting range for URLs to get startup info (start_number)
 
-**Ex:**
-`python AngelListStartups.py 1 1000`
+sys.argv[2] # ending range for URLs (end_number)
+```
+
+### Example Command Line Usage:
+```python
+python AngelListStartups.py 1 1000
+```
