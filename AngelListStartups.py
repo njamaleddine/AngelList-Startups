@@ -11,15 +11,15 @@ Parameters:
     sys.argv[1] = starting range for URLs to get startup info
     sys.argv[2] = ending range for URLs
 """
-import requests
 import csv
 import json
-import re
-import unicodedata
+import requests
 import sys
+import unicodedata
 
-# Generate a list of URLs to be searched
+
 def create_url_list(start_range, end_range):
+    """ Generate a list of URLs to be searched """
     urls = []
     start_range = int(start_range)
     end_range = int(end_range)
@@ -43,10 +43,16 @@ def create_url_list(start_range, end_range):
 
     return urls
 
-# Simple Data Validation Function
-# Strip new line characters and encode as ascii instead of unicode.
-# If column is empty we put a space character to maintain the correct number of columns in the CSV file.
+
 def validate_data(data):
+    """
+    Simple Data Validation Function
+
+    Strip new line characters and encode as ascii instead of unicode.
+
+    If column is empty we put a space character to maintain the correct number
+    of columns in the CSV file.
+    """
     if data == '':
         return ' '
 
@@ -54,19 +60,27 @@ def validate_data(data):
         return data
 
     else:
-        return unicodedata.normalize('NFKD', data.rstrip('\r?\n|\r/')).encode('ascii','ignore')
+        return unicodedata.normalize(
+            'NFKD', data.rstrip('\r?\n|\r/')
+        ).encode('ascii', 'ignore')
 
-# Validate the location of the Startup Company
+
 def validate_location(location):
+    """
+    Validate the location of the Startup Company
+    """
     try:
-        return unicodedata.normalize('NFKD', location[0]['display_name'].rstrip('\r?\n|\r/')).encode('ascii','ignore')
+        return unicodedata.normalize(
+            'NFKD', location[0]['display_name'].rstrip('\r?\n|\r/')
+        ).encode('ascii', 'ignore')
 
     except IndexError:
         return 'N/A'
 
-
-url_list = [] # Store list of urls that will be used for obtaining startup company information
-list_count = 0 # If somehow no data is obtained, we can relay an error message to the user.
+# Store list of urls that will be used for obtaining startup company information
+url_list = []
+# If somehow no data is obtained, we can relay an error message to the user.
+list_count = 0
 
 print "Obtaining Startup Company Information..."
 print "Hidden Startups will be skipped since we cannot obtain their information."
@@ -75,9 +89,12 @@ print "Hidden Startups will be skipped since we cannot obtain their information.
 output_file = csv.writer(open("startups.csv", "wb+"))
 
 # Write Header row for CSV
-output_file.writerow(["Id", "Community Profile", "Name", "AngelList URL", "Logo URL", "Thumbnail URL", "Quality",
-                    "Product Description", "High Concept", "Followers", "Company URL", "Created At", "Updated At",
-                    "Twitter", "Blog", "Video URL", "City"])
+output_file.writerow([
+    "Id", "Community Profile", "Name", "AngelList URL", "Logo URL",
+    "Thumbnail URL", "Quality", "Product Description", "High Concept",
+    "Followers", "Company URL", "Created At", "Updated At",
+    "Twitter", "Blog", "Video URL", "City"
+])
 
 # Pass in parameters from the command line while running a cron job
 url_list = create_url_list(sys.argv[1], sys.argv[2])
@@ -86,21 +103,20 @@ for i in range(len(url_list)):
     # Create an http request to angellist
     r = requests.get(url_list[i])
 
-    #print r.headers
-
     # If the API returns a 404, skip the data
     if r.status_code != 404:
-        data = json.loads(r.content) # data is stored as a dictionary
+        data = json.loads(r.content)  # data is stored as a dictionary
 
         # If the startup Company List Information isn't hidden, save to List
         if data['hidden'] == False:
             startup_location = validate_location(data['locations'])
 
             # Only Store NYC locations
-            if(startup_location == 'New York City'):
+            if startup_location == 'New York City':
                 list_count += 1
 
-                output_file.writerow([validate_data(data['id']),
+                output_file.writerow([
+                    validate_data(data['id']),
                     validate_data(data['community_profile']),
                     validate_data(data['name']),
                     validate_data(data['angellist_url']),
@@ -117,7 +133,7 @@ for i in range(len(url_list)):
                     validate_data(data['blog_url']),
                     validate_data(data['video_url']),
                     startup_location,
-                    ])
+                ])
                 print data['name']
 
 # Display an error message if no data is found for any companies

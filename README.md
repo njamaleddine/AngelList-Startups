@@ -3,8 +3,6 @@ AngelList-Startups
 
 ###Using AngelList's API obtain data about all startups in NYC
 
-**Author:** Nabil Jamaleddine
-
 **Date:** 2014-01-03
 
 **Description:** Using AngelList's API obtain data about all startups. Output data as a csv file. Skips hidden startups.
