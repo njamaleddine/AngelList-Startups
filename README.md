@@ -9,14 +9,26 @@ Each request to the website could potentially be scraped at 1000 companies per h
 
 **Angelist API Rate Limit:** 1000 requests per hour. For more see the [AngelList API](https://angel.co/api)
 
+### Update As of July 6th, 2015:
+AngelList-Startups script no longer works unfortunately because it requires an authentication token.
+
+Future updates TBD
+
+### Setup:
+```
+pip install - requirements.txta
+```
+
 ### Parameters:
 ```python
-sys.argv[1] # starting range for URLs to get startup info (start_number)
+sys.argv[1]  # (int) starting range for URLs to get startup info (start_number)
 
-sys.argv[2] # ending range for URLs (end_number)
+sys.argv[2]  # (int) ending range for URLs (end_number)
+
+sys.argv[3]  # (str) Location to search
 ```
 
 ### Example Command Line Usage:
 ```python
-python AngelListStartups.py 1 1000
+python angellist_startups.py 1 1000 "New York City"
 ```
