@@ -16,7 +16,7 @@ Future updates TBD
 
 ### Setup:
 ```
-pip install - requirements.txta
+pip install -r requirements.txt
 ```
 
 ### Parameters:
